@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * add - adds the first two elements of a stack, replaces both with sum
  * @stack: linked list stack to add
