@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * swap - swaps the two top elements of a stack
  * @stack: linked list stack to swap
