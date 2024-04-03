@@ -68,6 +68,7 @@ if (!found)
     exit(EXIT_FAILURE);
 }
 }
+}
 
 free(line);
 return (EXIT_SUCCESS);
