@@ -4,9 +4,15 @@
 *@stack: pointer to the stack
 *@line_number: line number
 */
-void push(stack_t **stack)
+void push(stack_t **stack, unsigned int line_number)
 {
     stack_t *new_node;
+
+    if (!arg || !isdigit(*arg))
+    {
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
+        exit(EXIT_FAILURE);
+    }
 
     new_node = malloc(sizeof(stack_t));
     if (new_node == NULL)
