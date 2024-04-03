@@ -3,8 +3,9 @@
 *push - pushes an element to the stack
 *@stack: pointer to the stack
 *@line_number: line number
+*@arg: argument to push
 */
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack, char *arg,unsigned int line_number)
 {
     stack_t *new_node;
 
