@@ -70,3 +70,6 @@ if (!found)
 
 free(line);
 return (EXIT_SUCCESS);
+
+void push(stack_t **stack, unsigned in line_number)
+void pall(stack_t **stack, unsigned int line_number)
