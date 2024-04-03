@@ -1,1 +1,1 @@
-# atlas-monty
+This is my Monty project
