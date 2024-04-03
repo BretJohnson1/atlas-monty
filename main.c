@@ -1,73 +1,115 @@
 #include "monty.h"
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
+
+FILE *file = NULL;
 /**
-*main - entry point
-*@argc: argument count
-*@argv: argument vector
-*Return: EXIT_SUCCESS or EXIT_FAILURE
-*/
-int main(int argc, char *line)
+ * main - Hi Mr. Monty how are you?
+ * @argc: The ticker for the arguments who come in
+ * @argv: The arguments themselves and what they are worth
+ * Return: Sometimes 0 (on Success).
+ */
+int main(int argc, char **argv)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    stack_t *stack = NULL;
-    unsigned int line_number = 0;
-    instruction_t instructions[] = {
-        {"push", push},
-        {"pall", pall},
-        {NULL, NULL}
-};
+	void (*f)(stack_t **, unsigned int) = NULL;
+	char *buffer = NULL, op[50] = {'\0'}, pushNum[50] = {'\0'}, *token = NULL;
+	size_t bufsize = 0;
+	stack_t *stack = NULL;
+	unsigned int line_number = 1;
 
-if (argc != 1)
-{
-    fprintf(stderr, "L4: usage: push integer");
-    exit(EXIT_FAILURE);
+	if (argc != 2)
+		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
+	file = fopen(argv[1], "r");
+	if (!file)
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]), exit(EXIT_FAILURE);
+	for (; getline(&buffer, &bufsize, file) != EOF; line_number++)
+	{
+		token = strtok((buffer), " \t\n");
+		if (!token)
+		{
+			free(buffer), buffer = NULL;
+			continue;
+		}
+		strcpy(op, token);
+		f = get_func(&stack, line_number, op);
+		if (!f)
+			fprintf(stderr, "Error: malloc failed\n"), error();
+		if (strcmp(op, "push") == 0)
+		{
+			token = strtok(NULL, " \t\n");
+			if (!token)
+			{
+				free(buffer), buffer = NULL, free_stack(&stack);
+				fprintf(stderr, "L%d: usage: push integer\n", line_number), error();
+			}
+			strcpy(pushNum, token);
+		}
+		free(buffer), buffer = NULL;
+		f(&stack, line_number);
+		if (strcmp(op, "push") == 0)
+			pushOp(&stack, line_number, pushNum);
+	}
+	free(buffer), fclose(file), free_stack(&stack);
+	return (EXIT_SUCCESS);
 }
+/**
+ *get_func - get a func of some kind
+ *@stack: the whole stack
+ *@l: the line number
+ *@code: the code being brought in
+ *Return: what ever func is right
+ */
 
-while ((read = getline(&line, &len, stdin)) != -1)
+void (*get_func(stack_t **stack, int l, char *code))(stack_t **, unsigned int)
 {
-    char *opcode, *argument;
-    line_number++;
+	instruction_t instruction[] = {
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
+		{"nop", nop}
+	};
+	int i = 0;
 
-/** parse the line into opcode and argument*/
-    opcode = strtok(line, " \n\t");
-    argument = strtok(NULL, " \n\t");
-
-/** search for the opcode and execute the associated function*/
-int found = 0;
-for (int i = 0; instructions[i].opcode != NULL; i++)
+	while (strcmp(code, instruction[i].opcode) != 0)
+	{
+		i++;
+		if (i > 7)
+		{
+			fprintf(stderr, "L%d: unknown instruction %s\n", l, code);
+			free_stack(stack);
+			error();
+		}
+	}
+	return (instruction[i].f);
+}
+/**
+ *pushOp - helps the push operation
+ *@stack: is a linked list
+ *@line_number: is a counter
+ *@pushNum: adds to a new node
+ */
+void pushOp(stack_t **stack, unsigned int line_number, char *pushNum)
 {
-    if (strcmp(opcode, instructions[i].opcode) == 0)
-    {
-        found = 1;
-        if (argument != NULL && strcmp(opcode, "push") == 0)
-        {
-            if (isdigit(*argument) || (argument[0] == '-' && isdigit(argument[1])))
-            instructions[i].f(&stack, line_number);
-        else
-        {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
-        }
-        }
-        else if (argument != NULL)
-        {
-            fprintf(stderr, "L%d: usage: %s\n", line_number, opcode);
-            exit(EXIT_FAILURE);
-        }
-        else
-        instructions[i].f(&stack, line_number);
-    break;
-    }
+	if (strcmp(pushNum, "0") == 0)
+		(*stack)->n = 0;
+	if (strcmp(pushNum, "0") != 0)
+	{
+		(*stack)->n = atoi(pushNum);
+		if ((*stack)->n == 0 || (pushNum[0] != '-' && (*stack)->n == -1))
+		{
+			fprintf(stderr, "Error: L%d: usage: push integer\n", line_number);
+			free_stack(stack);
+			error();
+		}
+	}
 }
-if (!found)
+/**
+ *error - error is bad
+ *Return: an exit
+ */
+void error(void)
 {
-    fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-    exit(EXIT_FAILURE);
-}
-}
-free(line);
-return (EXIT_SUCCESS);
+	fclose(file);
+	exit(EXIT_FAILURE);
 }
