@@ -47,14 +47,14 @@ for (int i = 0; instructions[i].opcode != NULL; i++)
             instructions[i].f(&stack, line_number);
         else
         {
-            fprintf(stderr, "L%d: usage: push integer\n", line number);
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
         }
         else if (argument != NULL)
         {
-            fprintf(stderr, "L%d: usage: %s\n, line_number, opcode";
-            exit(EXIT_FAILURE);)
+            fprintf(stderr, "L%d: usage: %s\n, line_number, opcode");
+            exit(EXIT_FAILURE);
         }
         else
         instructions[i].f(&stack, line_number);
