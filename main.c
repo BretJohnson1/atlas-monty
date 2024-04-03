@@ -7,9 +7,8 @@ void pall(stack_t **stack, unsigned int line_number);
 *@argv: argument vector
 *Return: EXIT_SUCCESS or EXIT_FAILURE
 */
-int main(int argc)
+int main(int argc, ssize_t len)
 {
-    void *argv;
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
