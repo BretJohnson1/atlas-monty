@@ -6,6 +6,8 @@
 #include <string.h>
 #include <ctype.h>
 
+int main(int argc, char *argv[]);
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
