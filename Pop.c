@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * pop - removes the first element of the stack
  * @stack: linked list stack to pop
