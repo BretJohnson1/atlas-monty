@@ -1,3 +1,4 @@
+#include "monty.h"
 /**
  * pint - prints the value in the first node of a stack
  * @stack: linked list stack to pint
