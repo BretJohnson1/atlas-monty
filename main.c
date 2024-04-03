@@ -9,6 +9,7 @@ void pall(stack_t **stack, unsigned int line_number);
 */
 int main(int argc, char *argv[])
 {
+    void argv[];
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
