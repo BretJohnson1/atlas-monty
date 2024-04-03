@@ -98,7 +98,7 @@ void pushOp(stack_t **stack, unsigned int line_number, char *pushNum)
 		(*stack)->n = atoi(pushNum);
 		if ((*stack)->n == 0 || (pushNum[0] != '-' && (*stack)->n == -1))
 		{
-			fprintf(stderr, "L6: usage: push integer\n", line_number);
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			free_stack(stack);
 			error();
 		}
