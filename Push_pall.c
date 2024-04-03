@@ -11,10 +11,9 @@ int main(int argc, char *argv[])
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
-    stack_t read;
     stack_t *stack = NULL;
     unsigned int line_number = 0;
-    instructions_t instructions[] = {
+    instruction_t instructions[] = {
         {"push", push},
         {"pall", pall},
         {NULL, NULL}
