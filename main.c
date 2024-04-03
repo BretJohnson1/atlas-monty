@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 if (argc != 1)
 {
-    fprintf(stderr, "L4: usage: %s\n", argv[0]);
+    fprintf(stderr, "L4: usage: push integer");
     exit(EXIT_FAILURE);
 }
 
