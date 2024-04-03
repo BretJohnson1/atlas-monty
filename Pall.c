@@ -1,16 +1,19 @@
 #include "monty.h"
-/**
-*pall - prints all the values on the stack
-*@stack: pointer to the stack
-*@line_number: line number
-*/
-void pall(stack_t **stack)
-{
-    stack_t *current = *stack;
 
-    while (current != NULL)
-    {
-        printf("%d\n", current->n);
-        current = current->next;
-    }
+/**
+ * pall - prints all elements of a stack
+ * @stack: linked list stack to pall
+ * @line_number: current line number of bytecode file
+ */
+void pall(stack_t **stack, unsigned int line_number)
+{
+	stack_t *node;
+
+	node = *stack;
+	while (node)
+	{
+		printf("%d\n", node->n);
+		node = node->next;
+	}
+	(void) line_number;
 }
