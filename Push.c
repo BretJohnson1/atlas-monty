@@ -4,7 +4,7 @@
 *@stack: pointer to the stack
 *@line_number: line number
 */
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack)
 {
     stack_t *new_node;
 
