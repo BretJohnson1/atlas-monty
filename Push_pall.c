@@ -53,7 +53,7 @@ for (int i = 0; instructions[i].opcode != NULL; i++)
         }
         else if (argument != NULL)
         {
-            fprintf(stderr, "L%d: usage: %s\n, line_number, opcode");
+            fprintf(stderr, "L%d: usage: %s\n", line_number, opcode);
             exit(EXIT_FAILURE);
         }
         else
@@ -63,7 +63,7 @@ for (int i = 0; instructions[i].opcode != NULL; i++)
 }
 if (!found)
 {
-    fprintf(stderr, "L%d: unknown instruction %s\n, line_number, opcode");
+    fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
     exit(EXIT_FAILURE);
 }
 }
