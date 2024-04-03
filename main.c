@@ -69,5 +69,5 @@ if (!found)
 }
 }
 free(line);
-return (EXIT_SUCCESS;)
+return (EXIT_SUCCESS);
 }
